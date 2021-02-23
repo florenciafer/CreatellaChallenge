@@ -5,6 +5,7 @@ const useGet = (url) => {
     const [isError, setIsError] = useState(false);
     const [data, setData] = useState(null);
 
+    console.log(url);
     useEffect(() => {
         setIsLoading(true);
        fetch(url)
