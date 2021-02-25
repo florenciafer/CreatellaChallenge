@@ -1,14 +1,23 @@
 import { useEffect, useState } from "react";
+import { URL_BASE } from "../../constantes/apiconfig";
 
 const useGet = (url) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
     const [data, setData] = useState(null);
 
-    console.log(url);
+    const [page, setpage] = useState(1);
+    const [limit, setLimit] = useState(15);
+    const [sort, setSort] = useState();
+  
+    const endpoint = `${URL_BASE}?_page=${page}&_limit=${limit}${
+      sort ? `&_sort=${sort}` : ""
+    }`;
+
+
     useEffect(() => {
         setIsLoading(true);
-       fetch(url)
+       fetch(endpoint)
         .then((results)=>{
             return results.json();
         })
@@ -21,9 +30,9 @@ const useGet = (url) => {
                 setIsError(true);
                 setIsLoading(false);
             });
-    }, [url]);
+    }, [endpoint]);
   
-    return [data, isLoading, isError];
+    return [data, isLoading,page,sort];
 };
 
 

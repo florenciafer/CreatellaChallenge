@@ -1,1 +1,10 @@
-@import"./componente/dropdown.scss";
+
+@import "./utils/variables";
+
+@import "./base/base";
+
+@import"./layout/body";
+
+@import "./components/loading.scss";
+@import "./components/containerGid";
+@import "./components/card";

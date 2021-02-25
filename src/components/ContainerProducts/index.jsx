@@ -1,31 +1,33 @@
 import useDetail from "../../utils/hooks/useDetail";
+
 import CardContainer from "../CardContainer/index";
 
 const ContainerProducts = () => {
   const { useget, setSort,setpage } = useDetail();
 
-  const [data, loading,setcard] = useget;
+  const [data, loading,sort,page] = useget;
  
   const handleOnchange = (event) => {
     setSort(event.target.value);
   };
+
   
   if (loading) {
     return <div className="preloader"></div>;
   }
   if (data) {
     return (
-      <div>
+      <div className="container-grid">
         <div>
-          <h1>Products Grid</h1>
+          <h1 className="title-grid">Products Grid</h1>
 
-          <p>
+          <p className="text-grid">
             Here you're sure to find a bargain on some of the finest ascii
             available to purchase. Be sure to peruse our selection of ascii
             faces in an exciting range of sizes and prices.
           </p>
 
-          <p>But first, a word from our sponsors:</p>
+          <p className="text-grid">But first, a word from our sponsors:</p>
           <script>
             document.write('
             <img
@@ -49,8 +51,10 @@ const ContainerProducts = () => {
             </select>
           </div>
         </div>
+        <div>
         <CardContainer cards={data}></CardContainer>
-        <button id="btn">render</button>
+        </div>
+        
       </div>
     );
   }

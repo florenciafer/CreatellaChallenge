@@ -38,9 +38,9 @@ const Card = ({face ,price,date,size}) => {
       }
    return (
         <div className="container-card">
-            <div style={{ fontSize: size }}>{face}</div>
-            <div >{converterPrice(price)}</div>
-            <div>  {converterDate(date)}</div>
+            <div className="face" style={{ fontSize: size }}>{face}</div>
+            <div className="price" ><span className="text">Price:</span>{converterPrice(price)}</div>
+            <div className="date"><span className="text">Date:</span>{converterDate(date)}</div>
              
         </div>
     )

@@ -1,68 +1,32 @@
 import React, { useEffect, useState } from 'react'
 import { URL_BASE } from '../../constantes/apiconfig';
+import useGet from './useget';
 
 
-const usescroll = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false);
-    const [data, setData] = useState(null);
-    const [totalpage, settotalpage] = useState(0);
-    const [listdata, setlistdata] = useState(null)
-  
-        const [page, setpage] = useState(1);
-        const [limit, setLimit] = useState(15);
-        const [sort, setSort] = useState();
-      
-        const endpoint = `${URL_BASE}?_page=${page}&_limit=${limit}${
-          sort ? `&_sort=${sort}` : ""}`;
+const UseScroll = () => {
+  const [page, setPage] = useState(1);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const getpost = ()=>{
-    useEffect(() => {
-        setIsLoading(true);
-       fetch(endpoint,{
-           method:"GET"
-       })
-       
-        .then((results)=>{
-            /* settotalpage(response.headers.get) */
-            return results.json();
-        })
-            .then((results) => {
-                console.log(results)
-                setlistdata(data)
-                setData([...data, ...listdata])
-                setIsLoading(false);
-            })
-            .catch((error) => {
-                setIsError(true);
-                setIsLoading(false);
-            });
-    }, []);
-  }
-    
+  const handleScroll = (event) => {
+    const { scrollTop, clientHeight, scrollHeight } = event.currentTarget;
+
+    if (scrollHeight - scrollTop === clientHeight) {
+      setPage(prev => prev + 1);
+    }
+  };
+
   useEffect(() => {
-    return ()=>{
-   getpost();
-    }
-   }, [page])
-  const handlescroll =()=>{
-    if(window.innerHeight + document.documentElement.scrollTop < document.documentElement.offsetHeight && page === totalpage &&isloading){
-      return;
-    }
-    setpage(page+1)//llega al final de la pagina cambia de page 
-  }
-    
-     
-      useEffect(() => {
-        window.addEventListener("scroll",handlescroll);
-        return () => {
-         window.removeEventListener("scroll",handlescroll);
-        }
-      }, [])
-      // comparar mi heigth widow  + pixeles top scroll es menor a height de mi elemento 
- return handlescroll();
-    
-  
-},
+    const loadUsers = async () => {
+      setLoading(true);
+      const newUsers = await useGet(page);
+      setUsers((prev) => [...prev, ...newUsers]);
+      setLoading(false);
+    };
 
-export default usescroll
+    loadUsers();
+  }, [page]);
+  
+};
+
+export default  UseScroll
