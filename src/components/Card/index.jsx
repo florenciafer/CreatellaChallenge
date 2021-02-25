@@ -41,7 +41,7 @@ const Card = ({face ,price,date,size}) => {
             <div style={{ fontSize: size }}>{face}</div>
             <div >{converterPrice(price)}</div>
             <div>  {converterDate(date)}</div>
-        
+             
         </div>
     )
 }

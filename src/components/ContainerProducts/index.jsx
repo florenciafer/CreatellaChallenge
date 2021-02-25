@@ -1,22 +1,21 @@
+import { useEffect, useState } from "react";
 import useDetail from "../../utils/hooks/useDetail";
 
 import CardContainer from "../CardContainer/index";
 
 const ContainerProducts = () => {
-  const {useget, setSort} = useDetail();
-
-  const [data, loading] = useget;
-
+  const { useget, setSort,setpage,page } = useDetail();
+  const [data, loading,totalpage] = useget;
+  
   const handleOnchange = (event) => {
     setSort(event.target.value);
   };
-
   if (loading) {
-    return <div className="preloader"></div>;
+    return <div className="preloader">....Loading</div>;
   }
   if (data) {
     return (
-      <div>
+      <div >
         <div>
           <h1>Products Grid</h1>
 
@@ -27,7 +26,14 @@ const ContainerProducts = () => {
           </p>
 
           <p>But first, a word from our sponsors:</p>
-          {/*    <script>document.write('<img class="ad" src="/ads/?r=' + Math.floor(Math.random()*1000) + '"/>');</script> */}
+          <script>
+            document.write('
+            <img
+              class="ad"
+              src="/ads/?r=' + Math.floor(Math.random()*1000) + '"
+            />
+            ');
+          </script>
         </div>
         <div className="season-container">
           <div className="season-select">
@@ -36,14 +42,15 @@ const ContainerProducts = () => {
               className="form-control"
               onChange={handleOnchange}
             >
-              <option value="none">No order</option>
-              <option value="size">By size</option>
-              <option value="price">By price</option>
-              <option value="id">By ID</option>
+              <option value="size">Size</option>
+            
+              <option value="price">Price</option>
+              <option value="id">ID</option>
             </select>
           </div>
         </div>
         <CardContainer cards={data}></CardContainer>
+       
       </div>
     );
   }
