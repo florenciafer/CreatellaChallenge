@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
 import useDetail from "../../utils/hooks/useDetail";
-
 import CardContainer from "../CardContainer/index";
 
 const ContainerProducts = () => {
-  const { useget, setSort,setpage,page } = useDetail();
-  const [data, loading,totalpage] = useget;
-  
+  const { useget, setSort,setpage } = useDetail();
+
+  const [data, loading,setcard] = useget;
+ 
   const handleOnchange = (event) => {
     setSort(event.target.value);
   };
+  
   if (loading) {
-    return <div className="preloader">....Loading</div>;
+    return <div className="preloader"></div>;
   }
   if (data) {
     return (
-      <div >
+      <div>
         <div>
           <h1>Products Grid</h1>
 
@@ -50,7 +50,7 @@ const ContainerProducts = () => {
           </div>
         </div>
         <CardContainer cards={data}></CardContainer>
-       
+        <button id="btn">render</button>
       </div>
     );
   }
